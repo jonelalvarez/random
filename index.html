@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You 💌</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #fce4ec, #f8bbd0, #f48fb1);
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 50px 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 90%;
+            animation: floatIn 0.8s ease-out;
+            position: relative;
+        }
+
+        @keyframes floatIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .heart {
+            font-size: 48px;
+            margin-bottom: 16px;
+            animation: beat 1.2s infinite;
+        }
+
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        h1 {
+            color: #c2185b;
+            font-size: 26px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        h2 {
+            color: #d81b60;
+            font-size: 16px;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-style: italic;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        p {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #ec407a, #c2185b);
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 6px 20px rgba(194, 24, 91, 0.35);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(194, 24, 91, 0.45);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .petals {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .petal {
+            position: absolute;
+            top: -20px;
+            width: 12px;
+            height: 12px;
+            background: rgba(236, 64, 122, 0.3);
+            border-radius: 50% 0 50% 50%;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(105vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .deco {
+            position: fixed;
+            font-size: 28px;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatDeco 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatDeco {
+            from { transform: translateY(0) rotate(0deg); }
+            to { transform: translateY(-15px) rotate(10deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="petals" id="petals"></div>
+
+    <span class="deco" style="top: 12%; left: 8%; animation-delay: 0s;">🪷</span>
+    <span class="deco" style="top: 20%; right: 10%; animation-delay: 1s;">✨</span>
+    <span class="deco" style="bottom: 18%; left: 12%; animation-delay: 2s;">🎀</span>
+    <span class="deco" style="bottom: 25%; right: 8%; animation-delay: 0.5s;">🪷</span>
+    <span class="deco" style="top: 40%; left: 5%; animation-delay: 1.5s;">💝</span>
+    <span class="deco" style="top: 60%; right: 5%; animation-delay: 2.5s;">🪷</span>
+    <span class="deco" style="top: 8%; left: 45%; animation-delay: 3s;">✨</span>
+
+    <div class="card">
+        <div class="heart">💗</div>
+        <h1>hi loves!</h1>
+        <h2>i have something for you ^^</h2>
+        <p>open it when you're ready...</p>
+        <button class="btn" id="openBtn">Open</button>
+    </div>
+
+    <script>
+        const encoded = 'aHR0cHM6Ly90aGVib3VxdWV0Lm1lL3YvODAxZWE1ZjQtNmJiZC00ZWU3LWE1MWUtMGIxNWZhODg5ZTgz';
+
+        document.getElementById('openBtn').addEventListener('click', function() {
+            const decoded = atob(encoded);
+            window.open(decoded, '_blank');
+        });
+
+        // floating petals
+        const petals = document.getElementById('petals');
+        for (let i = 0; i < 15; i++) {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            petal.style.left = Math.random() * 100 + '%';
+            petal.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            petal.style.animationDelay = (Math.random() * 10) + 's';
+            petal.style.opacity = Math.random() * 0.4 + 0.1;
+            petal.style.width = (Math.random() * 10 + 8) + 'px';
+            petal.style.height = petal.style.width;
+            petals.appendChild(petal);
+        }
+    </script>
+</body>
+</html>
